@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Be My Valentine 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ff4d6d;
+      margin-bottom: 30px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      padding: 15px 40px;
+      transition: transform 0.2s;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+      font-size: 1.6rem;
+    }
+
+    #yes:hover {
+      transform: scale(1.1);
+    }
+
+    #no {
+      position: fixed;
+      background: #999;
+      color: white;
+      left: 50%;
+      top: 65%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    #gif {
+      display: none;
+      position: fixed;
+      max-width: 90%;
+      max-height: 70%;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+    }
+
+    #yay-text {
+      display: none;
+      position: fixed;
+      top: 75%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      color: #ff4d6d;
+      font-weight: bold;
+      text-align: center;
+      z-index: 3;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* Credit text */
+    #credit {
+      position: fixed;
+      bottom: 10px;
+      right: 15px;
+      font-size: 0.9rem;
+      color: rgba(0,0,0,0.6);
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1>Will you be my Valentine? 💘</h1>
+    <button id="yes">YES 💖</button>
+  </div>
+
+  <button id="no">No 😢</button>
+
+  <!-- Center GIF -->
+  <img id="gif" src="https://media1.tenor.com/m/4n4cErvEq_sAAAAd/yapapa-cat.gif" alt="Yapapa Cat">
+
+  <!-- Text below GIF -->
+  <div id="yay-text">Yay!!! I know you would agree 🎉</div>
+
+  <!-- New looping sound -->
+  <audio id="sound" src="https://us-tuna-sounds-files.voicemod.net/76d86c31-3796-4279-8fc3-80b58bb18034-1763039526178.mp3" preload="auto" loop></audio>
+
+  <!-- Credit -->
+  <div id="credit">jude Anthony</div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const gif = document.getElementById("gif");
+    const card = document.getElementById("card");
+    const yayText = document.getElementById("yay-text");
+    const sound = document.getElementById("sound");
+
+    // NO button teleports when clicked
+    noBtn.addEventListener("click", () => {
+      const margin = 20;
+      const maxX = window.innerWidth - noBtn.offsetWidth - margin;
+      const maxY = window.innerHeight - noBtn.offsetHeight - margin;
+
+      const x = Math.random() * maxX + margin;
+      const y = Math.random() * maxY + margin;
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    // YES button behavior
+    yesBtn.addEventListener("click", () => {
+      card.style.display = "none";
+      noBtn.style.display = "none";
+
+      gif.style.display = "block";
+      yayText.style.display = "block";
+
+      // Play looping sound from online link
+      sound.currentTime = 0;
+      const playPromise = sound.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => console.log("Audio play blocked:", error));
+      }
+    });
+  </script>
+
+</body>
+</html>
